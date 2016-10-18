@@ -55,10 +55,18 @@ namespace Gfi.Hiring
 		public void Pawn_Move_LegalCoordinates_Forward_UpdatesCoordinates()
 		{
 			_chessBoard.Add(_pawn, 6, 3, PieceColor.Black);
-			_pawn.Move(MovementType.Move, 6, 2);
+			_pawn.Move(MovementType.Move, 6, 4);
 			Assert.That(_pawn.XCoordinate, Is.EqualTo(6));
-			Assert.That(_pawn.YCoordinate, Is.EqualTo(2));
+			Assert.That(_pawn.YCoordinate, Is.EqualTo(4));
 		}
 
-	}
+        [Test]
+        public void Pawn_Move_IllegalCoordinates_Backward_DoesNotMove()
+        {
+            _chessBoard.Add(_pawn, 6, 3, PieceColor.Black);
+            _pawn.Move(MovementType.Move, 6, 2);
+            Assert.That(_pawn.XCoordinate, Is.EqualTo(6));
+            Assert.That(_pawn.YCoordinate, Is.EqualTo(3));
+        }
+    }
 }

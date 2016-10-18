@@ -45,7 +45,9 @@ namespace Gfi.Hiring
         public void Move(MovementType movementType, int newX, int newY)
         {
             //1. Check if move is a legal move
-            if (Math.Abs(newX - XCoordinate) == 1  && (newY < XCoordinate && newY <= YCoordinate + 2))
+            // - Can move left or right 1 space
+            // - Can move forward 1 space but not back
+            if (Math.Abs(newX - XCoordinate) <= 1  && (newY > YCoordinate && newY == YCoordinate + 1))
             {
                 //2. Raise  an OnMove event so that chessboard can move the peice to its new location.
                 if (OnMove != null)
