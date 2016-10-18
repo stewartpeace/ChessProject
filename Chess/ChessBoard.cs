@@ -17,6 +17,7 @@ namespace Gfi.Hiring
         {
             if (IsLegalBoardPosition(xCoordinate, yCoordinate) && pieces.GetValue(xCoordinate, yCoordinate) == null)
             {
+                pawn.OnMove += Pawn_OnMove;
                 pawn.XCoordinate = xCoordinate;
                 pawn.YCoordinate = yCoordinate;
                 pieces[xCoordinate, yCoordinate] = pawn;
@@ -25,6 +26,20 @@ namespace Gfi.Hiring
             {
                 pawn.XCoordinate = -1;
                 pawn.YCoordinate = -1;
+            }
+        }
+
+        private void Pawn_OnMove(Pawn pawn, int newX, int newY, MovementType moveType)
+        {
+            if (moveType.Equals(MovementType.Move))
+            {
+                if (IsLegalBoardPosition( newX, newY) &&  pieces.GetValue(newX, newY) == null)
+                {
+                    pieces[pawn.XCoordinate, pawn.YCoordinate] = null;
+                    pawn.XCoordinate = newX;
+                    pawn.YCoordinate = newY;
+                    pieces[newX, newY] = pawn;
+                }
             }
         }
 

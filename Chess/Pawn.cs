@@ -2,12 +2,16 @@
 
 namespace Gfi.Hiring
 {
+    public delegate void OnMoveEventHandler(Pawn sender, int newX, int newY, MovementType movementType);
+
     public class Pawn
     {
         private ChessBoard _chessBoard;
         private int _xCoordinate;
         private int _yCoordinate;
         private PieceColor _pieceColor;
+
+        public event OnMoveEventHandler OnMove;
         
         public ChessBoard ChessBoard
         {
@@ -40,7 +44,15 @@ namespace Gfi.Hiring
 
         public void Move(MovementType movementType, int newX, int newY)
         {
-            throw new NotImplementedException("Need to implement Pawn.Move()");
+            //1. Check if move is a legal move
+            if (Math.Abs(newX - XCoordinate) == 1  && (newY < XCoordinate && newY <= YCoordinate + 2))
+            {
+                //2. Raise  an OnMove event so that chessboard can move the peice to its new location.
+                if (OnMove != null)
+                {
+                    OnMove(this, newX, newY, movementType);
+                }
+            }
         }
 
         public override string ToString()
