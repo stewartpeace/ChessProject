@@ -8,19 +8,29 @@ namespace Gfi.Hiring
         public static readonly int MaxBoardHeight = 7;
         private Pawn[,] pieces;
 
-        public ChessBoard ()
+        public ChessBoard()
         {
             pieces = new Pawn[MaxBoardWidth, MaxBoardHeight];
         }
 
         public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor)
         {
-            throw new NotImplementedException("Need to implement ChessBoard.Add()");
+            if (IsLegalBoardPosition(xCoordinate, yCoordinate) && pieces.GetValue(xCoordinate, yCoordinate) == null)
+            {
+                pawn.XCoordinate = xCoordinate;
+                pawn.YCoordinate = yCoordinate;
+                pieces[xCoordinate, yCoordinate] = pawn;
+            }
+            else
+            {
+                pawn.XCoordinate = -1;
+                pawn.YCoordinate = -1;
+            }
         }
 
         public bool IsLegalBoardPosition(int xCoordinate, int yCoordinate)
         {
-            throw new NotImplementedException("Need to implement ChessBoard.IsLegalBoardPosition()");
+            return (xCoordinate >= 0 && MaxBoardWidth > xCoordinate ) && ( yCoordinate >= 0 &&  MaxBoardHeight > yCoordinate)  ? true : false;
         }
 
     }
